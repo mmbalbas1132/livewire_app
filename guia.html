@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es" xmlns:vendor="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Guia_de_app_con_livewire</title>
+</head>
+<body>
+<h1>Guia de app con livewire</h1>
+<h2>1 Instalación de Livewire y creación de la aplicación</h2>
+<ul>
+    <li>En consola: <b>laravel new nombre_de_la_aplicacion</b></li>
+    <li>En consola: <b>composer require livewire/livewire</b></li>
+    <li>Incluir los assets en la vista de blade que vaya a usar Livewire. Los assets son los siguientes:
+    <ul>
+        <li><b>@livewireStyles</b></li>
+        <li><b>@livewireScripts</b></li>
+    </ul>
+    </li>
+    <li>Para mantener lo assets actualizados es necesario modificar el archivo composer.json en el apartado scripts añadiendo la siguiente línea
+    <ul><li><b>"@php artisan vendor:publish --force --tag=livewire:assets --ansi"</b> </li></ul></li>
+</ul>
+
+<h2>2 Crear y renderizar componentes</h2>
+<ul>
+    <li>En consola crear un componente: <b>php artisan make:livewire NombreComponente</b><br>
+    Esto nos crea dos archivos, una clase y una vista de blade <ul>
+        <li><b>app/Http/Livewire/NombreComponente.php</b></li>
+            <li><b>app/resources/views/livewire/nombrecomponente.blade.php</b></li>
+        </ul></li>
+    <li>También puedo crear componentes inline y en este caso solo se crea la clase y en el método render de la misma es donde se va a renderizar el html. En consola: <b>php artisan make:livewire Componente --inline</b></li>
+    <li>Si queremos organizar el contenido en subcarpetas en consola: <b>php artisan make:livewire NombreComponente/Index</b> nos crea la carpeta NombreComponente en la carpeta livewire de http y en la de views</li>
+    <li>Si creamos un componete como users-list con el comando <b>php artisan make:livewire users-list</b>, se crea la clase UsersList con Pascal Case aplicado y la vista users-list.blade.php con el Kebab Case aplicado</li>
+    <li>También podemos crear componentes separados en subcarpetas mediante consola con <b>php artisan make:livewire componente.show</b> y esto nos crearía los siguientes directorios y archivos:
+    <ul>
+        <li>app/Http/Livewire/Componentes/Show.php</li>
+        <li>resources/views/livewire/articles/show.blade.php</li>
+    </ul></li>
+    <li>Tenemos deos formas de renderizar un componente en la vista:
+    <ul><li>
+        Mediante la directiva <b>@livewire('clase o componente creado')</b>
+    </li>
+    <li>Si queremos renderizar un componente de una subcarpeta usamos la sintaxis de puntos <b>@livewire('articles.index')</b> A partir de aquí usaré la app que se est´creando</li>
+        <li>Para renderizar un componente Inline, que se renderiza en su método, usamos <b>@livewire('inline')</b></li>
+        <li>En caso de que la clase tuviese dos nombres como InlineComponent lo llamaríamos usando Kebab Case <b>@livewire('inline-component')</b></li>
+
+    </ul>
+        <li>La otra forma de renderizar componentes es mediante la etiqueta <b>&lt;livewire:component /&gt; que funciona exactamente igual que la anterior a la hora de invocar a los componentes y que sigue las mismas reglas sintácticas sin las comillas</b></li>
+    <li>Con esta etiqueta tambiénpodríamos invocar a los estilos y los scripts de la siguiente forma: <b> &lt;livewire:styles /&gt; y &lt;livewire:scripts /&gt;</b></li>
+    <li><b>De todos modos, se recomienda usar solo una de las dos monmclaturas para dar consistencia al código</b></li>
+    </li>
+</ul>
+
+
+</body>
+</html>
