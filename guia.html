@@ -88,6 +88,23 @@
 <img src="fotos_guia/8.png" alt="captura">
 <p>En muchos casos el método mount() es muy útil, pero en este caso lo más sencillo es pasarlo directamente por la función render de la siguiente forma y el resultado es: </p>
 <img src="fotos_guia/9.png" alt="captura">
+<p>Para que se muestre el contenido de la DB en la vista debemos usar la sintaxis de blade <b>{{ $article->title }}</b> y <b>{{ $article->content }}</b> </p>
+<p> <b>Podemos hacer un resumen del flujo:</b> </p>
+<ol>
+    <li>Primero, en el archivo routes/ <b>web.php</b> se retorna la vista welcome </li>
+    <li>En la vista welcome "resources/views/<b>welcome.blade.php</b>" renderizamos el componente articles "app/Livewire/ <b>Articles.php</b> " donde primero va a evaluar la clase donde se retorna la vista blade con los artículos de la DB</li>
+    <li>Finalmente se muestra el listado de artículos obtenido en la vista resources/views/livewire/ <b>articles.blade.php</b> </li>
+</ol>
+
+<p>Podemos ahorrar un paso obteniendo el componente de livewire directamente desde la ruta, pero para eso tendremos que crear un layout que debe estar prodefecto en la carpeta layaouts.app</p>
+<p>Creo lacarpeta components dentro de views y la carpeta layouts dentro de components, meto el archivo resources/views/<b>welcome.blade.php</b> a esta carpeta y lo renombro como app.blade.php para cumplir con la convención. La ruta queda como <b>C:\resources\views\components\layouts\app.blade.php</b>  Utilizar una carpeta components para almacenar componentes reutilizables y una carpeta layouts para las plantillas de diseño es una práctica común en Laravel. </p>
+<img src="fotos_guia/12.png" alt="captura">
+<p>El archivo routes/<b>web.php</b> quedaría de la siguiente forma:</p>
+<img src="fotos_guia/10.png" alt="captura">
+<p>Y el archivo resources/views/<b>welcome.blade.php</b> quedaría con el código: </p>
+<img src="fotos_guia/11.png" alt="captura">
+<p>Una vez movido el archivo resources/views/<b>welcome.blade.php</b> pasaría a llamarse resources/views/components/layouts/ <b>app.blade.php</b> y tendría su nueva ruta y nuevo código con {{ slot }} para que renderice el contenido</p>
+<img src="fotos_guia/13.png" alt="captura">
 
 
 

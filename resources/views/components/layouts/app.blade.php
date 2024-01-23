@@ -20,9 +20,7 @@
 
     </head>
     <body class="antialiased">
-
-    @livewire('articles')
-
+    {{ $slot }}
     @livewireScripts
     </body>
 </html>
