@@ -8,7 +8,8 @@
     <title>Guia_de_app_con_livewire</title>
 </head>
 <body>
-<h1>Guia de app con livewire</h1>
+<h1>Guia de app con Livewire</h1>
+<!--http://localhost/livewire_app/lw_app/public/-->
 <h2>1 Instalación de Livewire y creación de la aplicación</h2>
 <ul>
     <li>En consola: <b>laravel new nombre_de_la_aplicacion</b></li>
@@ -49,9 +50,46 @@
     </ul>
         <li>La otra forma de renderizar componentes es mediante la etiqueta <b>&lt;livewire:component /&gt; que funciona exactamente igual que la anterior a la hora de invocar a los componentes y que sigue las mismas reglas sintácticas sin las comillas</b></li>
     <li>Con esta etiqueta tambiénpodríamos invocar a los estilos y los scripts de la siguiente forma: <b> &lt;livewire:styles /&gt; y &lt;livewire:scripts /&gt;</b></li>
-    <li><b>De todos modos, se recomienda usar solo una de las dos monmclaturas para dar consistencia al código</b></li>
+    <li><b>De todos modos, se recomienda usar solo una de las dos monemclaturas para dar consistencia al código</b></li>
     </li>
 </ul>
+<h2>3 Utilizar propiedades en los componentes de Livewire</h2>
+<p>Antes de empezar a trabajar con las propiedades de un componente debemos configurar nuestra base de datos en el archivo .env. Los *** indican la contraseña privada de cada usuario y el nombre de la DB es, en mi caso lw_app </p>
+<img src="fotos_guia/configuracion env.png" alt="">
+<p>Para definir una propiedad dentro de un componete debemos ir a su clase y definirla como cualquier propiedad de su clase de php.</p>
+<p>Nos dirigimos a la clase Articles.php y creamos la propiedad <b>public $h1 = 'Lista de artículos';</b> cuya condición indispensable es que sea pública para que se a accesible desde la vista. Una vez creada e invocada desde la vista articles.blade.php con {{ $h1}} la ejecutamos y vemos que se renderiza el contenido
+    <br>Es importante no guardar información sensible en la clase ya que será accesible desde la vista</p>
+<p>También podemos modificar el contenido de la vista desde resources/views/<b>welcome.blade.php</b> pasando como segundo parámetro un array en el que indicamos el elemento a modificar y como segundo parámetro del array el nuevo contenido</p>
+<p>El código sería: <b> @livewire('articles', ['h1' => 'Listado modificado desde la vista welcome']) y se muestra el nuevo mensaje ya que se sobreescribe el mensaje</b></p>
+<p><b>Siempre que queramos pasar propiedades de estas formas debemos, obligatoriamente, haberlas definido en la clase. </b></p>
+<p>Esta sintaxis reconoce valores de php como operaciones como <b>@livewire('articles', ['h1' => 1+1])</b> que devuelve 2</p>
+<p>La clases también se pueden modificar con la sintaxis de eteiquetas mediante atributos con la sintaxis <b>&lt;livewire:articles h1='nueva modificación' /&gt</b></p>
+<p>Para que se reconozca el php con esta sintaxis sería: <b>&lt;livewire:articles :h1='1+1' /&gt</b> usando los : , de manera similar a como funciona VueJs</p>
+<p>Todo esto se hace raramente para definir un título</p><br><br>
+<p>Borramos el $h1 nde la clase y definimos el título de forma manual para posteriormente obtener los valores de los títulos desde la DB</p>
+<p>En resources/views/livewire/ <b>articles.blade.php escribimos  &lt;h1&gt;Listado de artículos&lt;/h1&gt;</b>
+</p>
+<p>Ahora queremos pasar la variable $articles por la directiva del archvo resources/views/<b>welcome.blade.php</b> por lo que tenemos que difinirla dentro de la directiva @php(). Tengo que crear el modelo mediante consola con <b>php artisan make:model Article -mf</b> con m para que cree la migración y f para que cree el factory. </p>
+<p>Agregamos el namespace completo del modelo que acabamos de crear <b>App\Models\Article</b></p>
+<img src="fotos_guia/2.png" alt="captura">
+<p>Agregamos los campos title de tipo string y content de tipo test</p>
+<img src="fotos_guia/3.png" alt="captura">
+<p>Ahora en el factory vamos a definir el título como una oración aleatoria y el contenido como un párrafo aleatorio</p>
+<img src="fotos_guia/4.png" alt="captura">
+<p>Com ya está configurada la DB ejecuto en consola <b>php artisan migrate</b> para ejecutar las migraciones.</p>
+<p>Con <b>php artisan tinker</b> arranco Tiker y genero los seeds mediante <b>Article::factory()->count(10)->create</b> </p>
+<p>Imprimo los elementos de la DB en resources/views/livewire/ <b>articles.blade.php </b> teniendo en cuenta que solo deben tener un elemento padre que es el div y los imprimo en una ul mediante @foreach()</p>
+<img src="fotos_guia/5.png" alt="captura">
+<p>Al actualizar me da el error de que la variable $articles no está definida por lo tengo que inicializar la propiedad en la clase app/Livewire/ <b>Articles.php</b> </p>
+<img src="fotos_guia/6.png" alt="captura">
+<p>Lo anterior sería una forma de hacerlo, pero lo ideal sería obtener los datos de la DB directamente desde la clase app/Livewire/ <b>Articles.php</b>. Para ello haremos los siguientes cambios en este archivo y el resources/views/<b>welcome.blade.php</b> qudará de la siguiente forma: </p>
+<img src="fotos_guia/7.png" alt="captura">
+<p>y el app/Livewire/ <b>Articles.php</b> quedará de la siguiente forma usando el método mount() que funciona como constrctor:</p>
+<img src="fotos_guia/8.png" alt="captura">
+<p>En muchos casos el método mount() es muy útil, pero en este caso lo más sencillo es pasarlo directamente por la función render de la siguiente forma y el resultado es: </p>
+<img src="fotos_guia/9.png" alt="captura">
+
+
 
 
 </body>

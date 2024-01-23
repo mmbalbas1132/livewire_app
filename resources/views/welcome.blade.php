@@ -17,22 +17,12 @@
         }
         </style>
         @livewireStyles
-        <livewire:styles />
+
     </head>
     <body class="antialiased">
-    <livewire:articles />
-       @livewire('articles')
 
-    <livewire:articles.index />
-       @livewire('articles.index')
+    @livewire('articles')
 
-    <livewire:users-list />
-       @livewire('users-list')
-
-    <livewire:inline />
-         @livewire('inline')
-
-    <livewire:scripts />
     @livewireScripts
     </body>
 </html>
